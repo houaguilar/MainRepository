@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">OsiptelTest</string>
+    <string name="extended_fab_content_desc">CREATE NEW COUNTER</string>
+    <string name="extended_fab_label">CREATE NEW COUNTER</string>
+    <string name="title">What is the name of your counter</string>
+    <string name="create_counter">Create</string>
+    <string name="cancel">Cancel</string>
+
+
+
 </resources>
