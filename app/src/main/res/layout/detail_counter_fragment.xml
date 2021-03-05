@@ -50,7 +50,16 @@
         app:layout_constraintStart_toEndOf="@+id/btn_addition"
         app:layout_constraintTop_toBottomOf="@+id/txt_counter" />
 
-
+    <ImageButton
+        android:id="@+id/btn_delete_counter"
+        style="@style/Widget.MaterialComponents.FloatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_delete_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_addition" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

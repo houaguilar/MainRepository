@@ -7,6 +7,7 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 
@@ -23,6 +24,9 @@ interface WebService {
 
     @POST("counter/dec")
     suspend fun postDecCounter(@Body idCounter: IdCounter): ArrayList<Counter>
+
+    @DELETE("counter")
+    suspend fun deleteCounter(@Body idCounter: IdCounter): ArrayList<Counter>
 }
 
 object RetrofitClient {

@@ -27,7 +27,7 @@
             app:argType="string"
             android:defaultValue="null"/>
         <argument
-            android:name="counter"
+            android:name="id"
             app:argType="string"
             android:defaultValue="null"/>
         <argument

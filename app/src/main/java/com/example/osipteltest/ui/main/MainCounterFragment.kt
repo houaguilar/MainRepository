@@ -10,7 +10,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.osipteltest.R
 import com.example.osipteltest.core.Resource
 import com.example.osipteltest.data.model.Counter
@@ -53,15 +55,28 @@ class MainCounterFragment : Fragment(R.layout.main_counter_fragment),
                     binding.rvMainCounter.adapter = adapter
                 }
                 is Resource.Failure -> {
-
                 }
             }
         })
-
         binding.extendFab.setOnClickListener {
             showCreateCounterListDialog()
         }
 
+//        return ItemTouchHelper(object :
+//            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+//            override fun onMove(
+//                recyclerView: RecyclerView,
+//                viewHolder: RecyclerView.ViewHolder,
+//                target: RecyclerView.ViewHolder
+//            ): Boolean {
+//                return false
+//            }
+//
+//            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+//                adapter.deleteCounterSwipe(viewHolder.adapterPosition)
+//            }
+//
+//        }).attachToRecyclerView(binding.rvMainCounter)
     }
 
 //    override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -80,17 +95,15 @@ class MainCounterFragment : Fragment(R.layout.main_counter_fragment),
 //        rv_main_counter.adapter = adapter
 //    }
 
-//    override fun onDestroy() {
+    //    override fun onDestroy() {
 //        super.onDestroy()
 //        viewModel.clearMemory()
 //    }
-
     private fun showCreateCounterListDialog() {
         activity?.let {
             val todoTitleEditText = EditText(it)
             todoTitleEditText.inputType =
                 InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_WORDS
-
             MaterialAlertDialogBuilder(requireContext())
                 .setTitle(resources.getString(R.string.title))
                 .setView(todoTitleEditText)
@@ -107,11 +120,9 @@ class MainCounterFragment : Fragment(R.layout.main_counter_fragment),
                     val counter = todoTitleEditText.text.toString().trim()
                     addNewCounter(counter)
                     dialog.dismiss()
-
                 }
                 .show()
         }
-
     }
 
     private fun addNewCounter(title: String) {
@@ -133,22 +144,22 @@ class MainCounterFragment : Fragment(R.layout.main_counter_fragment),
                                 binding.rvMainCounter.adapter = adapter
                             }
                             is Resource.Failure -> {
-
                             }
                         }
                     })
-
                 }
                 is Resource.Failure -> {
-
                 }
             }
         })
     }
 
-
     override fun listItemClicked(counter: Counter) {
         showCounterListItems(counter)
+    }
+
+    override fun listItemLongClicked(counter: Counter) {
+        deleteCounterSwiped(counter.id)
     }
 
     private fun showCounterListItems(counter: Counter) {
@@ -156,7 +167,6 @@ class MainCounterFragment : Fragment(R.layout.main_counter_fragment),
 //            val action = MainCounterFragmentDirections.actionMainCounterFragmentToDetailCounterFragment(counter)
 //            it.findNavController().navigate(action)
 //        }
-
         findNavController().navigate(
             MainCounterFragmentDirections.actionMainCounterFragmentToDetailCounterFragment(
                 counter.title,
@@ -164,8 +174,14 @@ class MainCounterFragment : Fragment(R.layout.main_counter_fragment),
                 counter.count
             )
         )
+    }
 
+//    override fun counterSwipe(counter: Counter) {
+//        deleteCounterSwiped(counter.id)
+//    }
 
+    private fun deleteCounterSwiped(id: String){
+        viewModel.deleteCounter(id)
     }
 
 //    private fun updateLists() {

@@ -11,4 +11,16 @@ class CounterRepositoryImpl (private val dataSourceRemote: RemoteCounterDataSour
     override suspend fun postCounter(title: String): ArrayList<Counter> {
         return dataSourceRemote.postNewCounter(title)
     }
+
+    override suspend fun postIncCounter(id: String): ArrayList<Counter> {
+        return dataSourceRemote.postIncCounter(id)
+    }
+
+    override suspend fun postDecCounter(id: String): ArrayList<Counter> {
+        return dataSourceRemote.postDecCounter(id)
+    }
+
+    override suspend fun deleteCounter(id: String): ArrayList<Counter> {
+        return dataSourceRemote.deleteCounter(id)
+    }
 }

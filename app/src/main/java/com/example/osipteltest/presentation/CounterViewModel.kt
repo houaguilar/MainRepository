@@ -1,11 +1,11 @@
 package com.example.osipteltest.presentation
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.liveData
+import androidx.lifecycle.*
 import com.example.osipteltest.core.Resource
+import com.example.osipteltest.data.model.Counter
 import com.example.osipteltest.repository.CounterRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.lang.Exception
 
 class CounterViewModel (private val repository: CounterRepository): ViewModel() {
@@ -25,6 +25,30 @@ class CounterViewModel (private val repository: CounterRepository): ViewModel() 
             emit(Resource.Success(repository.postCounter(title)))
         } catch (e: Exception) {
             emit(Resource.Failure(e))
+        }
+    }
+
+    fun incCounter(id: String) = liveData(Dispatchers.IO) {
+        emit(Resource.Loading())
+        try {
+            emit(Resource.Success(repository.postIncCounter(id)))
+        } catch (e: Exception) {
+            emit(Resource.Failure(e))
+        }
+    }
+
+    fun decCounter(id: String) = liveData(Dispatchers.IO) {
+        emit(Resource.Loading())
+        try {
+            emit(Resource.Success(repository.postDecCounter(id)))
+        } catch (e: Exception) {
+            emit(Resource.Failure(e))
+        }
+    }
+
+    fun deleteCounter(id: String) {
+        viewModelScope.launch {
+            repository.deleteCounter(id)
         }
     }
 }
